@@ -1,0 +1,15 @@
+pacman::p_load(corrplot, dplyr, ggplot2)
+str(starwars)
+starwars_selected <- starwars %>% select("name", "height", "mass")
+
+## Shadow Matrix 
+starwars_selected_matriz <- as.data.frame(abs(is.na(starwars_selected))) 
+
+#variáveis com na
+starwars_selected_matriz_na <- starwars_selected_matriz[which(sapply(starwars_selected_matriz, sd) > 0)] 
+
+#correlações
+round(cor(starwars_selected_matriz_na), 3) 
+
+# traz variável de interesse 
+starwars_selected_matriz_n <- cbind(starwars_selected_matriz_na, name = starwars_selected_matriz$name) 
